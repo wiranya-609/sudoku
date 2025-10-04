@@ -10,35 +10,42 @@
 
 <body>
   <script>
-   
-    
+
+
     let cell;
     const boardWidth = 450;
     const boardHeight = 450;
-    let matrix = [
-      [2,3,4,5,6,7,8,9,0],
-      [3,4,5,6,7,8,9,0,8]
-    ];
-    console.log(matrix)
 
+    let matrix = [
+      [0, 7, 3, 0, 0, 0, 0, 6, 0],
+      [0, 0, 4, 0, 7, 0, 0, 0, 1],
+      [0, 0, 2, 8, 0, 0, 0, 0, 9],
+      [0, 6, 0, 0, 0, 0, 0, 0, 0],
+      [8, 0, 0, 6, 3, 0, 0, 0, 4],
+      [5, 0, 9, 0, 8, 4, 0, 0, 0],
+      [0, 0, 5, 7, 6, 0, 0, 0, 3],
+      [7, 0, 0, 3, 9, 8, 2, 0, 0],
+      [0, 1, 0, 0, 5, 0, 6, 0, 0],
+    ];
 
 
     function setup() {
       createCanvas(600, 600);
       background(255);
       cell = boardWidth / 9;
-      console.log(width)
-      console.log(height)
+      console.log(width);
+      console.log(height);
+
 
     }
 
     function draw() {
       drawTable()
       drawsmalltable()
+      drawNumber()
     }
 
     function drawTable() {
-
       for (let i = 0; i <= 9; i++) {
         if (i % 3 === 0) {
           strokeWeight(3);
@@ -54,6 +61,7 @@
       let row = floor(mouseX / cell);
       let col = floor(mouseY / cell);
       console.log(row, col);
+      positionOnCanvas()
     }
 
 
@@ -63,13 +71,42 @@
       for (let j = 0; j <= 9; j++) {
         line(j * cell, 500, j * cell, 550);
       }
+      textAlign(CENTER, CENTER);
+      textSize(0.4*cell); //ตัวเลขเล็กลง
+      fill(0);
+      strokeWeight(1); //ไม่ได้
+      for (let k=0;k<9;k++){
+        let x = k * cell + cell / 2;
+        let y = 525;
+        text(k + 1, x, y);
+        //ถ้าจะให้เลขมากขึ้น อย่าลืมพิมพ์ ตัวแปร+1
+      }
+
     }
- 
-     
 
+    function positionOnCanvas() {
+      let posX = mouseX;
+      let posY = mouseY;
+      console.log(mouseX, mouseY);
+    }
 
+    function drawNumber() {
+      textAlign(CENTER, CENTER);
+      textSize(0.4 * cell);
+      fill(0);
+      strokeWeight(1);
+      for (r = 0; r < 9; r++) {
+        for (c = 0; c < 9; c++) {
+          if (matrix[r][c] !== 0) {
+            let x = c * cell + cell / 2;
+            let y = r * cell + cell / 2;
+            text(matrix[r][c], x, y);
+          }
+        }
 
+      }
 
+    }
 
 
 
