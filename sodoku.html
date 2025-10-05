@@ -8,10 +8,15 @@
 </head>
 
 
+<p> SUDOKU GAME grop7</p>
+
+
+
 <body>
   <script>
 
 
+   
     let cell;
     const boardWidth = 450;
     const boardHeight = 450;
@@ -35,6 +40,7 @@
       cell = boardWidth / 9;
       console.log(width);
       console.log(height);
+
 
 
     }
@@ -72,10 +78,10 @@
         line(j * cell, 500, j * cell, 550);
       }
       textAlign(CENTER, CENTER);
-      textSize(0.4*cell); //ตัวเลขเล็กลง
+      textSize(0.4 * cell); //ตัวเลขเล็กลง
       fill(0);
       strokeWeight(1); //ไม่ได้
-      for (let k=0;k<9;k++){
+      for (let k = 0; k < 9; k++) {
         let x = k * cell + cell / 2;
         let y = 525;
         text(k + 1, x, y);
@@ -90,6 +96,8 @@
       console.log(mouseX, mouseY);
     }
 
+
+   
     function drawNumber() {
       textAlign(CENTER, CENTER);
       textSize(0.4 * cell);
@@ -108,7 +116,19 @@
 
     }
 
+    //ฟังชันคลิกเลือกเลข
+    let selectedNumber = null;
+    function mouseClicked(){ 
+      if (mouseY>500 && mouseY<550){
+       selectedNumber = floor(mouseX / cell) + 1;
+      }
+      console.log(selectedNumber);
+    }
 
+    function inputNumberInaTable(){
+      if (mouseY>=0 && mouseY<450)
+      return selectedNumber
+    }
 
 
   </script>
