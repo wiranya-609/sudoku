@@ -21,6 +21,7 @@
     const boardWidth = 450;
     const boardHeight = 450;
 
+
     let matrix = [
       [0, 7, 3, 0, 0, 0, 0, 6, 0],
       [0, 0, 4, 0, 7, 0, 0, 0, 1],
@@ -34,6 +35,10 @@
     ];
 
 
+
+
+
+
     function setup() {
       createCanvas(600, 600);
       background(255);
@@ -45,11 +50,20 @@
 
     }
 
+
+
     function draw() {
       drawTable()
+
+      // if (colorRow !== null && colorCol !== null) {
+      // noStroke();
+      // fill(255, 230, 150); 
+      // rect(colorCol * cell, colorRow * cell, cell, cell);
+      //  }
+
       drawsmalltable()
       drawNumber()
-      
+
     }
 
     function drawTable() {
@@ -107,10 +121,10 @@
       for (r = 0; r < 9; r++) {
         for (c = 0; c < 9; c++) {
           if (matrix[r][c] !== 0) {
-            let x = c * cell + cell / 2;
-            let y = r * cell + cell / 2;
-            text(matrix[r][c], x, y);
-            
+            let y = c * cell + cell / 2;
+            let x = r * cell + cell / 2;
+            text(matrix[r][c], y,x);
+
           }
         }
 
@@ -120,12 +134,14 @@
 
     //ฟังชันคลิกเลือกเลข
     let selectedNumber = null;
+    let colorRow = null;
+    let colorCol = null;
     function mouseClicked() {
       if (mouseY > 500 && mouseY < 550) {
         selectedNumber = floor(mouseX / cell) + 1;
       }
       else if (mouseY >= 0 && mouseY < 450) {
-         inputNumberInaTable();
+        inputNumberInaTable();
       }
       console.log(selectedNumber);
     }
@@ -135,11 +151,48 @@
     function inputNumberInaTable() {
       let row = floor(mouseY / cell);
       let col = floor(mouseX / cell);
-      if (matrix[row][col] === 0)
-      matrix[row][col] = selectedNumber;
+      if (matrix[row][col] === 0 && selectedNumber !== null) {
+        if (checkNumber(row,col,selectedNumber)){
+        matrix[row][col] = selectedNumber;}
+        //colorRow = row;
+        //colorCol = col;
+      }
+      else {
+        console.log((matrix))
+      }
       console.log(matrix[row][col]);
-
     }
+
+    function checkNumber(row, col, selectedNumber) {
+      //ตรวจแถว
+      for (let c = 0; c < 9; c++)
+        if (c != col && matrix[row][c] === selectedNumber) {
+          return false;
+        }
+      console.log(c);
+
+
+
+      for (let r = 0; r < 9; r++) {
+        if (r != row && matrix[r][col] === selectedNumber) {
+          return false;
+        }
+      }
+
+      let startRow = Math.floor(row / 3) * 3;
+      let startCol = Math.floor(col / 3) * 3;
+
+      for (let r = startRow; r < startRow + 3; r++) {
+        for (let c = startCol; c < startCol + 3; c++) {
+          if ((r !== row || c !== col) && matrix[r][c] === selectedNumber) {
+            // เช้คกล่อง 3x3 
+            return false;
+          }
+        }
+      }
+      return true;
+    }
+
 
 
   </script>
